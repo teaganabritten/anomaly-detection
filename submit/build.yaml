@@ -77,9 +77,6 @@ Resources:
     Properties:
       Roles:
         - !Ref EC2InstanceRole
-      Tags:
-        - Key: Name
-          Value: !Sub ${AWS::StackName}-ec2-instance-profile
 
   # IAM Policy for S3 bucket access
   S3BucketAccessPolicy:
@@ -125,7 +122,7 @@ Resources:
   SNSTopic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: ds5220-dp1
+      TopicName: !Sub ${AWS::StackName}-topic
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName}-sns-topic
@@ -236,6 +233,6 @@ Resources:
     Type: AWS::EC2::EIPAssociation
     Properties:
       InstanceId: !Ref EC2Instance
-      EIP: !Ref ElasticIP
+      AllocationId: !GetAtt ElasticIP.AllocationId
       
 
